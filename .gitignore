@@ -17,10 +17,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-.DS_Store
-receipt-ms/.vscode/launch.json
-receipt-ms/database/deploy-receiptdb.sql
-receipt-ms/database/database.go
+*.DS_Store
+*.vscode
+*deploy*.sql
 
 ############################################################
 # react-native 
