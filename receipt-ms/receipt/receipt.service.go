@@ -18,16 +18,18 @@ func SetupRoutes(apiBasePath string) {
 	handleReceipt := http.HandlerFunc(receiptHandler)
 	handleReceipts := http.HandlerFunc(receiptsHandler)
 
-	http.Handle(fmt.Sprintf("%s/%s", apiBasePath, receiptsBasePath), cors.Middleware(handleReceipt))
-	http.Handle(fmt.Sprintf("%s/%s/", apiBasePath, receiptsBasePath), cors.Middleware(handleReceipts))
+	http.Handle(fmt.Sprintf("%s/%s/", apiBasePath, receiptsBasePath), cors.Middleware(handleReceipt))
+	http.Handle(fmt.Sprintf("%s/%s", apiBasePath, receiptsBasePath), cors.Middleware(handleReceipts))
 
 	log.Print("........Routes Setup Complete")
 }
 
 func receiptHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("receipt handler")
 	urlPathSegments := strings.Split(r.URL.Path, "receipts/")
 	receiptID, err := strconv.Atoi(urlPathSegments[len(urlPathSegments)-1])
 	if err != nil {
+		log.Fatal(err)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -35,8 +37,6 @@ func receiptHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 
 	case http.MethodGet:
-
-		fmt.Printf("[Receipt]Get case...\n")
 		receipt, err := getReceipt(receiptID)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -102,6 +102,8 @@ func receiptsHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
+		fmt.Printf("GET [%s]\n", receiptsJson)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(receiptsJson)
 	case http.MethodPost:
@@ -119,6 +121,11 @@ func receiptsHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		receiptJSON, err := json.Marshal(receipt)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Printf("POST [%s]\n", receiptJSON)
 		w.WriteHeader(http.StatusCreated)
 
 	case http.MethodOptions:

@@ -3,6 +3,7 @@ package receipt
 import (
 	"context"
 	"database/sql"
+	"log"
 	"receipt-ms/database"
 	"sync"
 	"time"
@@ -37,6 +38,7 @@ func getReceipt(receiptID int) (*Receipt, error) {
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
+		log.Fatal(err)
 		return nil, err
 	}
 	return receipt, nil
@@ -50,7 +52,7 @@ func getReceiptList() ([]Receipt, error) {
 	totalCost,
 	taxRate, 
 	totalTax
-	FROM receipts`)
+	FROM receiptdb.receipts`)
 	if err != nil {
 		return nil, err
 	}
@@ -78,8 +80,8 @@ func updateReceipt(receipt Receipt) error {
 	storeName=?,
 	dateofPurchase=?,
 	totalCost=CAST(? AS DECIMAL(13,2)),
-	taxRate=CAST(? AS DECIMAL(13,2)),
-	totalTax=?
+	taxRate=CAST(? AS DECIMAL(5,2)),
+	totalTax=CAST(? AS DECIMAL(13,2))
 	WHERE receiptID=?`,
 		receipt.StoreName,
 		receipt.DateOfPurchase,
@@ -96,22 +98,24 @@ func updateReceipt(receipt Receipt) error {
 func insertReceipt(receipt Receipt) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	result, err := database.DbConn.ExecContext(ctx, `INSERT INTO receipt
-	(storeName, 
+	result, err := database.DbConn.ExecContext(ctx, `INSERT INTO receipts
+	(	storeName, 
 		dateOfPurchase, 
-		TotalCost,
-		TaxRate,
-		TotalTax) VALUES (?,?,?,?,?)`,
+		totalCost,
+		taxRate,
+		totalTax) VALUES (?,?,?,?,?)`,
 		receipt.StoreName,
 		receipt.DateOfPurchase,
 		receipt.TotalCost,
 		receipt.TaxRate,
 		receipt.TotalTax)
 	if err != nil {
+		log.Fatal(err)
 		return 0, nil
 	}
 	insertID, err := result.LastInsertId()
 	if err != nil {
+		log.Fatal(err)
 		return 0, nil
 	}
 	return int(insertID), nil

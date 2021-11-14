@@ -1,11 +1,9 @@
 package receipt
 
-import "time"
-
 type Receipt struct {
-	ReceiptID      int       `json:"receiptID"`
-	StoreName      string    `json:"storeName"`
-	DateOfPurchase time.Time `json:"dateOfPurchase"`
+	ReceiptID      int    `json:"receiptID"`
+	StoreName      string `json:"storeName"`
+	DateOfPurchase string `json:"dateOfPurchase"`
 	// ProductList    []Product `json:"productList"`
 	TotalCost string `json:"totalCost"`
 	TaxRate   string `json:"taxRate"`
