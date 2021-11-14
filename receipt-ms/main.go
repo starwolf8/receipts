@@ -1,16 +1,23 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"receipt-ms/database"
+	"receipt-ms/receipt"
 
-type fooHandler struct {
-	Message string
-}
+	// "ms-demo/product"
+	"net/http"
 
-func (f *fooHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(f.Message))
-}
+	_ "github.com/go-sql-driver/mysql"
+)
+
+const apiBasePath = "/api"
 
 func main() {
-	http.Handle("/foo", &fooHandler{Message: "Test"})
+
+	log.Print("Initializing Receipts Microservice\n")
+	database.SetupDatabase()
+	receipt.SetupRoutes(apiBasePath)
+	// product.SetupRoutes(apiBasePath)
 	http.ListenAndServe(":5000", nil)
 }
