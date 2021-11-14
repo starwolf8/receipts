@@ -16,3 +16,4 @@
 .DS_Store
 receipt-ms/.vscode/launch.json
 receipt-ms/database/deploy-receiptdb.sql
+receipt-ms/database/database.go

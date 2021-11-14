@@ -12,7 +12,7 @@ func SetupDatabase() {
 
 	log.Print("........Database\n")
 	var err error
-	DbConn, err = sql.Open("mysql", "root:M@yz13mysJ3r3$$@tcp(127.0.0.1:3306)/receiptdb")
+	DbConn, err = sql.Open("mysql", "<user>:<pw>@tcp(127.0.0.1:3306)/receiptdb")
 	if err != nil {
 		log.Fatal(err)
 	}
