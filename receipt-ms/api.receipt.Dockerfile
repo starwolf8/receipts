@@ -7,12 +7,12 @@ FROM golang:1.16-alpine
 # create a directory inside the image that we are building
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+COPY receipt-ms/go.mod ./
+COPY receipt-ms/go.sum ./
 
-ADD . /app
+ADD ./receipt-ms/ /app
 
-COPY *.go ./
+COPY receipt-ms/*.go ./
 RUN go mod tidy
 RUN go mod download
 

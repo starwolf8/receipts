@@ -3,13 +3,25 @@ version: '3'
 # reference: https://onexlab-io.medium.com/docker-compose-mysql-initdb-4c3388047dea
 
 services:
+  ## User Interface
+  # UI
+  ui-receipt:
+    build:
+      context: .
+      dockerfile: receipt-ui/Dockerfile
+    ports:
+      - 19000:19000
+      - 19002:19002
+      - 19006:19006
+    volumes:
+      - ../../user-interface/receipt-ui/:/node
   ## DATABASES
   # Receipt DB
   db-receipt:
     container_name: db-receipt
     build:
       context: .
-      dockerfile: db.receipt.Dockerfile
+      dockerfile: receipt-ms/db.receipt.Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: Password1
     ports:
@@ -37,7 +49,7 @@ services:
     container_name: receipt-ms
     build:
       context: .
-      dockerfile: api.receipt.Dockerfile
+      dockerfile: receipt-ms/api.receipt.Dockerfile
     ports:
       - "5001:5001"
     depends_on:
@@ -57,6 +69,8 @@ services:
   #     - fullstack
   #   volumes:
   #     - 
+
+
 
 volumes:
   v_app:
