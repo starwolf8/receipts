@@ -39,6 +39,7 @@ func receiptHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		receipt, err := getReceipt(receiptID)
 		if err != nil {
+			log.Print(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -49,6 +50,7 @@ func receiptHandler(w http.ResponseWriter, r *http.Request) {
 		// return a single receipt
 		receiptJSON, err := json.Marshal(receipt)
 		if err != nil {
+			log.Print(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -93,12 +95,13 @@ func receiptsHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		receiptList, err := getReceiptList()
 		if err != nil {
-			fmt.Printf("%s", err)
+			log.Print(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		receiptsJson, err := json.Marshal(receiptList)
 		if err != nil {
+			log.Print(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

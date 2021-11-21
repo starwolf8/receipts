@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  ## DATABASES
+  # Receipt DB
+  db-receipt:
+    container_name: db-receipt
+    build:
+      context: .
+      dockerfile: db.receipt.Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: Password1
+    ports:
+    - "3307:3306"
+    networks:
+      - fullstack
+    volumes: 
+          - ./database:/docker-entrypoint-initdb.d
+    # volumes:
+    #   - v_db:/var/lib/mysql
+
+  # Product DB
+  # db-product:
+  #   container_name: db_mysql
+  #   build:
+  #     context: .
+  #     dockerfile: db.product.Dockerfile
+  #   networks:
+  #     - fullstack
+  #   volumes:
+      # - 
+  ## APIs
+  # Receipt WebAPI
+  receipt-ms:
+    container_name: receipt-ms
+    build:
+      context: .
+      dockerfile: api.receipt.Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db-receipt
+    networks:
+      - fullstack
+    volumes:
+      - v_app:/usr/src/app/
+
+# Product WebAPI
+  # app-product:
+  #   container_name: app-product
+  #   build:
+  #     context: .
+  #     dockerfile: api.product.Dockerfile
+  #   networks:
+  #     - fullstack
+  #   volumes:
+  #     - 
+
+volumes:
+  v_app:
+  v_db:
+
+networks:
+  fullstack:
+    driver: bridge

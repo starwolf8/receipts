@@ -10,9 +10,8 @@ var DbConn *sql.DB
 
 func SetupDatabase() {
 
-	log.Print("........Database\n")
 	var err error
-	DbConn, err = sql.Open("mysql", "<user>:<pw>@tcp(127.0.0.1:3306)/receiptdb")
+	DbConn, err = sql.Open("mysql", "root:Password1@tcp(db-receipt:3306)/receiptdb")
 	if err != nil {
 		log.Fatal(err)
 	}
