@@ -1,5 +1,7 @@
 version: '3'
 
+# reference: https://onexlab-io.medium.com/docker-compose-mysql-initdb-4c3388047dea
+
 services:
   ## DATABASES
   # Receipt DB
