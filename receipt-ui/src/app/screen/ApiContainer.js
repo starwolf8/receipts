@@ -24,8 +24,7 @@ class ApiContainer extends Component {
             loading: true,
 
         })
-        // fetch("https://jsonplaceholder.typicode.com/users")
-        fetch("http://localhost:5001/api/receipts")
+        fetch("http://127.0.0.1:5001/api/receipts")
             .then(response => response.json())
             .then((responseJson) => {
                 console.log('getting data from fetch', responseJson)
@@ -45,8 +44,7 @@ class ApiContainer extends Component {
             loading: true,
 
         })
-        // axios.get("https://jsonplaceholder.typicode.com/users")
-        axios.get("http://localhost:5001/api/receipts")
+        axios.get("http://127.0.0.1:5002/gateway/receipts")
             .then(response => {
                 console.log('getting data from axios', response.data);
                 setTimeout(() => {

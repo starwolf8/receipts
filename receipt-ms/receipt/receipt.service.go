@@ -44,13 +44,14 @@ func receiptHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if receipt == nil {
+			log.Print("Receipt Not Found")
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 		// return a single receipt
 		receiptJSON, err := json.Marshal(receipt)
 		if err != nil {
-			log.Print(err)
+			log.Print(fmt.Sprintf("ReceiptID: %d Not Found", receiptID))
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

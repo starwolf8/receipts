@@ -5,19 +5,22 @@ version: '3'
 services:
   ## User Interface
   # UI
-  ui-receipt:
+  user-interface:
     build:
       context: .
       dockerfile: receipt-ui/Dockerfile
+    # network_mode: bridge  
     ports:
       - 19000:19000
       - 19002:19002
       - 19006:19006
+    networks:
+      - fullstack
     volumes:
       - ../../user-interface/receipt-ui/:/node
   ## DATABASES
   # Receipt DB
-  db-receipt:
+  database:
     container_name: db-receipt
     build:
       context: .
@@ -45,7 +48,7 @@ services:
       # - 
   ## APIs
   # Receipt WebAPI
-  receipt-ms:
+  microservice:
     container_name: receipt-ms
     build:
       context: .
