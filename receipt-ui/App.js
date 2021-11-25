@@ -1,30 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import axios from 'axios';
+import { useState } from 'react';
+import { Asset } from 'expo-asset';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomePage from './Home';
 
-import ApiContainer from './src/app/screen/ApiContainer';
+import { Platform } from 'react-native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import Header from './Header';
+
+import { StatusBar } from 'expo-status-bar';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button
-        onPress={() => {
-          alert('You tapped the button!');
-        }}
-        title="Press Me" />
-        <ApiContainer />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  let [fontsLoaded] = useFonts({
+    'OpenSans': require('./assets/fonts/OpenSans-Regular.ttf'),
+  });
+
+
+  if ( !fontsLoaded ) {
+    return (
+      <AppLoading />
+    );
+  } else {
+
+    return (
+
+      <NavigationContainer
+        style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+        <Stack.Navigator
+          initiateRouteName="Receipts"
+          headerMode="screen"
+        >
+          <Stack.Screen
+            name="Receipts"
+            component={HomePage}
+            options={{
+              header: () => <Header headerDisplay="Receipt" />
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+
+    );
+  }
+}
