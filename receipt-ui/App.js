@@ -1,17 +1,15 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { useState } from 'react';
-import { Asset } from 'expo-asset';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomePage from './Home';
+import HomePage from './src/app/Home';
 
 import { Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import Header from './Header';
-import Footer from './Footer';
-import { navigationRef } from './RootNavigation';
+import Header from './src/app/Header';
+import Footer from './src/app/Footer';
+import { navigationRef } from './src/app/RootNavigation';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -24,7 +22,7 @@ export default function App() {
   });
 
 
-  if ( !fontsLoaded ) {
+  if (!fontsLoaded) {
     return (
       <AppLoading />
     );
