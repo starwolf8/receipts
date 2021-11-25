@@ -10,6 +10,8 @@ import { Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import Header from './Header';
+import Footer from './Footer';
+import { navigationRef } from './RootNavigation';
 
 import { StatusBar } from 'expo-status-bar';
 
@@ -31,7 +33,8 @@ export default function App() {
     return (
 
       <NavigationContainer
-        style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+        style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}
+        ref={navigationRef}>
         <Stack.Navigator
           initiateRouteName="Receipts"
           headerMode="screen"
@@ -44,6 +47,7 @@ export default function App() {
             }}
           />
         </Stack.Navigator>
+        <Footer />
       </NavigationContainer>
 
     );
