@@ -3,13 +3,24 @@ version: '3'
 # reference: https://onexlab-io.medium.com/docker-compose-mysql-initdb-4c3388047dea
 
 services:
+  ## Message Broker
+  # RabbitMQ
+  # rabbitmq:
+  #   container_name: rabbitmq
+  #   restart: always
+  #   ports:
+  # the standard AMQP protocol port
+  #     - "5672:5672"
+  # HTTP management UI
+  #     - "15672:15672"
+        # - fullstack
   ## User Interface
   # UI
   user-interface:
     build:
       context: .
       dockerfile: receipt-ui/Dockerfile
-    # network_mode: bridge  
+    # network_mode: bridge
     ports:
       - 19000:19000
       - 19002:19002
@@ -31,7 +42,7 @@ services:
     - "3307:3306"
     networks:
       - fullstack
-    volumes: 
+    volumes:
           - ./database:/docker-entrypoint-initdb.d
     # volumes:
     #   - v_db:/var/lib/mysql
@@ -45,7 +56,7 @@ services:
   #   networks:
   #     - fullstack
   #   volumes:
-      # - 
+      # -
   ## APIs
   # Receipt WebAPI
   microservice:
@@ -71,7 +82,7 @@ services:
   #   networks:
   #     - fullstack
   #   volumes:
-  #     - 
+  #     -
 
 
 

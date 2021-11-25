@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"receipt-ms/cors"
+	"receipt-ms/rabbitmq"
 	"strconv"
 	"strings"
 )
@@ -56,6 +57,8 @@ func receiptHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		fmt.Printf("GET [%s]\n", receiptJSON)
+		rabMessage := rabbitmq.RabbitMessage{Message: string(receiptJSON)}
+		rabMessage.PushMessage()
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(receiptJSON)
 	case http.MethodPut:
