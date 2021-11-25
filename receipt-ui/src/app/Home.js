@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 
-import ApiContainer from './src/app/screen/ApiContainer';
+import ApiContainer from '../../src/app/screen/ApiContainer';
 
 // add export statement so that this function is available to other components of the app. 
 export default function HomePage() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-import logo from './assets/receipt-icon.jpg';
+import logo from '../../assets/receipt-icon.jpg';
 
 export default function Header(props) {
     return(
