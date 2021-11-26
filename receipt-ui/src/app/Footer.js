@@ -8,12 +8,14 @@ export default function Footer() {
         <View style={styles.footer}>
             <TouchableOpacity
             style={styles.button}
-            onPress={() => RootNavigation.navigate('Receipts')}
+            onPress={() => RootNavigation.navigate('HomePage')}
             >
             <Text>Home</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity 
+            style={styles.button}
+            onPress={() => RootNavigation.navigate('ReceiptPage')}>
                 <Text>Receipts</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
