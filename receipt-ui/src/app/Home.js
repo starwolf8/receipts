@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FlatList, Text, Image, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, View } from 'react-native';
 
 import ApiContainer from '../../src/app/screen/ApiContainer';
+import DemoTable from './receipt/receipt-table';
 
 // add export statement so that this function is available to other components of the app.
 export default function HomePage({ navigation }) {
@@ -18,7 +19,8 @@ export default function HomePage({ navigation }) {
                 setTimeout(() => {
                     console.log("getting data from fetch", json);
                     setData(json);
-                }, 3000)
+                }, 500)
+                // setData(json);
             })
             .catch((error) => console.error(error))
             .finally(() => finishLoading(false))
@@ -49,13 +51,16 @@ export default function HomePage({ navigation }) {
         <View style={styles.container}>
             {/* <ApiContainer />
             <StatusBar style="auto" /> */}
-            {dataLoading ? <ActivityIndicator /> : (
+
+            <DemoTable/>
+
+            {/* {dataLoading ? <ActivityIndicator /> : (
                 <FlatList
                     data={receiptData}
                     renderItem={item => renderItem(item)}
                     keyExtractor={(item) => item.receiptID.toString()}
                 />
-            )}
+            )} */}
         </View>
     )
 }
